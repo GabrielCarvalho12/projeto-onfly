@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Http\Resources\DespesasResource;
 use App\Http\Resources\DespesasResourceCollection;
 use App\Http\Resources\UserResource;
+use App\Notifications\DespesasNotification;
+use Illuminate\Support\Facades\Auth;
 
 class DespesasController extends Controller
 {
@@ -23,9 +25,7 @@ class DespesasController extends Controller
         $user = new UserResource($user);
 
         $despesa = Despesas::where('usuario', $user->id)->get();
-
         $this->authorize('verDespesa', $despesa->first());
-
         $despesa = new DespesasResourceCollection($despesa);
 
         return response()->json([
@@ -41,6 +41,9 @@ class DespesasController extends Controller
      */
     public function store(DespesasRequest $request)
     {
+
+        $this->authorize('verDespesa', Despesas::where('usuario', $request->usuario)->first());
+
         $despesa = Despesas::create([
             'descricao' => $request->descricao,
             'data' => $request->data,
@@ -50,8 +53,11 @@ class DespesasController extends Controller
 
         $dados = new DespesasResource($despesa);
 
+        $user = Auth::user();
+        $user->notify(new DespesasNotification());
+
         return response()->json([
-            "message" => "Despesa Inserida",
+            "message" => "Despesa Cadastrada",
             "data" => $dados
         ], 200);
     }
@@ -66,11 +72,11 @@ class DespesasController extends Controller
     {
         $this->authorize('verDespesa', Despesas::find($id));
 
-        $despesa = Despesas::where('id', $id)
-            ->get();
+        $despesa = Despesas::where('id', $id)->first();
+        $dados = new DespesasResource($despesa);
 
         return response()->json([
-            "data" => $despesa
+            "data" => $dados
         ], 201);
     }
 
@@ -83,18 +89,20 @@ class DespesasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->authorize('verDespesa', Despesas::find($id));
-
         $despesa = Despesas::find($id);
+
+        $this->authorize('verDespesa', $despesa);
 
         $despesa->descricao = $request->descricao;
         $despesa->data = $request->data;
         $despesa->valor = $request->valor;
-
         $despesa->save();
 
+        $dados = new DespesasResource($despesa);
+
         return response()->json([
-            "message" => "Despesa Atualizada"
+            "message" => "Despesa Atualizada",
+            "data" => $dados
         ], 201);
     }
 

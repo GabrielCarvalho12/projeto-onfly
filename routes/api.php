@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Registrar usuário
-Route::post('user', 'App\Http\Controllers\UserAuthController@user');
+Route::post('register', 'App\Http\Controllers\UserAuthController@register');
 
 //CRUD de Despesas
 Route::apiResource('despesas', 'App\Http\Controllers\DespesasController')->middleware('auth:api');

@@ -77,7 +77,7 @@ class DespesasController extends Controller
 
         return response()->json([
             "data" => $dados
-        ], 201);
+        ], 200);
     }
 
     /**
@@ -103,7 +103,7 @@ class DespesasController extends Controller
         return response()->json([
             "message" => "Despesa Atualizada",
             "data" => $dados
-        ], 201);
+        ], 200);
     }
 
     /**
@@ -122,6 +122,6 @@ class DespesasController extends Controller
 
         return response()->json([
             "message" => "Despesa Excluída"
-        ], 201);
+        ], 200);
     }
 }

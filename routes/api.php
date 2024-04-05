@@ -14,10 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Registrar usuário
-Route::post('register', 'App\Http\Controllers\UserAuthController@register');
+Route::resource('register', 'App\Http\Controllers\UserRegisterController')->only(['store']);
 
 //CRUD de Despesas
 Route::apiResource('despesas', 'App\Http\Controllers\DespesasController')->middleware('auth:api');
 
-
+//CRUD de Usuários
+Route::apiResource('users', 'App\Http\Controllers\UserController')->middleware('auth:api');
 

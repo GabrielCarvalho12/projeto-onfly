@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\UserResourceCollection;
+use App\Http\Requests\UserRegisterRequest;
 
 class UserController extends Controller
 {
@@ -16,30 +18,12 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $user = User::get();
+        $dados = new UserResourceCollection($user);
 
-        $data = User::where('email', $request['email'])
-        ->get();
-
-        foreach ($data as $row) {
-
-            if (Hash::check($request['password'], $row->password)) {
-                //Auth::login($data);
-                return view('admin.index', json_decode(json_encode($data), true));
-            }else{
-                echo "senhas diferentes";
-            }
-        }
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json([
+            "data" => $dados
+        ], 200);
     }
 
     /**
@@ -48,15 +32,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRegisterRequest $request)
     {
-        $user = $request->all();
-        $user['password'] = bcrypt($request->password);
-        $user = User::create($user);
+        $data = $request->all();
+        $data['password'] = Hash::make($request->password);
 
-        Auth::login($user);
+        $user = User::create($data);
+        $user = new UserResource($user);
 
-        return redirect()->route('admin.index');
+        return response()->json([
+            'message' => 'Usuário Cadastrado',
+            'user' => $user
+        ], 200);
     }
 
     /**
@@ -67,18 +54,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $user = User::where('id', $id)->first();
+        $user = new UserResource($user);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->json([
+            "data" => $user
+        ], 201);
     }
 
     /**
@@ -90,7 +71,20 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $data = $request->all();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        $dados = new UserResource($user);
+
+        return response()->json([
+            "message" => "User Atualizado",
+            "data" => $dados
+        ], 201);
     }
 
     /**
@@ -101,6 +95,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+
+        $user->delete();
+
+        return response()->json([
+            "message" => "User Excluído"
+        ], 201);
     }
 }

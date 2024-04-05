@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +16,3 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/admin/index', [AdminController::class, 'index'])->name('admin.index');
-
-Route::get('/register', [LoginController::class, 'create'])->name('login.create');
-Route::get('/login', [LoginController::class, 'index'])->name('login.index');
-
-Route::resource('users', UserController::class);

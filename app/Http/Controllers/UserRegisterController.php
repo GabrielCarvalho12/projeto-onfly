@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserResource;
+use App\Http\Requests\UserRegisterRequest;
 
-class UserAuthController extends Controller
+class UserRegisterController extends Controller
 {
-    public function register(Request $request)
+    public function store(UserRegisterRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed'
-        ]);
-
+        $data = $request->all();
         $data['password'] = Hash::make($request->password);
 
         $user = User::create($data);

@@ -25,7 +25,7 @@ class DespesasController extends Controller
         $user = new UserResource($user);
 
         $despesa = Despesas::where('usuario', $user->id)->get();
-        $this->authorize('verDespesa', $despesa->first());
+        $this->authorize('verDespesaId', $despesa->first());
         $despesa = new DespesasResourceCollection($despesa);
 
         return response()->json([
@@ -41,25 +41,46 @@ class DespesasController extends Controller
      */
     public function store(DespesasRequest $request)
     {
+        $despesa = Despesas::where('usuario', $request->usuario)->first();
 
-        $this->authorize('verDespesa', Despesas::where('usuario', $request->usuario)->first());
+        if (empty($despesa)) {
+            $despesa = Despesas::create([
+                'descricao' => $request->descricao,
+                'data' => $request->data,
+                'usuario' => $request->usuario,
+                'valor' => $request->valor,
+            ]);
 
-        $despesa = Despesas::create([
-            'descricao' => $request->descricao,
-            'data' => $request->data,
-            'usuario' => $request->usuario,
-            'valor' => $request->valor,
-        ]);
+            $dados = new DespesasResource($despesa);
 
-        $dados = new DespesasResource($despesa);
+            $user = Auth::user();
+            $user->notify(new DespesasNotification());
 
-        $user = Auth::user();
-        $user->notify(new DespesasNotification());
+            return response()->json([
+                "message" => "Despesa Cadastrada",
+                "data" => $dados
+            ], 200);
 
-        return response()->json([
-            "message" => "Despesa Cadastrada",
-            "data" => $dados
-        ], 200);
+        } else {
+            $this->authorize('verDespesa', $despesa);
+
+            $despesa = Despesas::create([
+                'descricao' => $request->descricao,
+                'data' => $request->data,
+                'usuario' => $request->usuario,
+                'valor' => $request->valor,
+            ]);
+
+            $dados = new DespesasResource($despesa);
+
+            $user = Auth::user();
+            $user->notify(new DespesasNotification());
+
+            return response()->json([
+                "message" => "Despesa Cadastrada",
+                "data" => $dados
+            ], 200);
+        }
     }
 
     /**
@@ -70,7 +91,7 @@ class DespesasController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('verDespesa', Despesas::find($id));
+        $this->authorize('verDespesaId', Despesas::find($id));
 
         $despesa = Despesas::where('id', $id)->first();
         $dados = new DespesasResource($despesa);
@@ -91,7 +112,7 @@ class DespesasController extends Controller
     {
         $despesa = Despesas::find($id);
 
-        $this->authorize('verDespesa', $despesa);
+        $this->authorize('verDespesaId', $despesa);
 
         $despesa->descricao = $request->descricao;
         $despesa->data = $request->data;
@@ -116,7 +137,7 @@ class DespesasController extends Controller
     {
         $despesa = Despesas::find($id);
 
-        $this->authorize('verDespesa', $despesa);
+        $this->authorize('verDespesaId', $despesa);
 
         $despesa->delete();
 

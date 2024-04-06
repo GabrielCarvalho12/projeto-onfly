@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use  GuzzleHttp\Client;
 
-class DespesasTest extends TestCase
+class UserTest extends TestCase
 {
     private $http;
 
@@ -22,14 +22,14 @@ class DespesasTest extends TestCase
     //Testa as requisições do tipo POST
     public function testPost()
     {
-        //Testa a inserção de uma despesa
-        $response = $this->http->request('POST', 'http://localhost:8000/api/despesas', [
+        //Testa a inserção de um usuário
+        $response = $this->http->request('POST', 'http://localhost:8000/api/users', [
             'headers'=> ['Authorization' => 'Bearer {token}'], //Token gerado através da rota /Oauth/Token
             'form_params' => [
-                'descricao' => 'testeInsert',
-                'data' => '2024-01-01',
-                'usuario' => '1',
-                'valor' => '200'
+                'name' => 'nameTeste',
+                'email' => 'teste@email.com',
+                'password' => 'senhaTeste',
+                'password_confirmation' => 'senhaTeste'
             ],
         ]);
 
@@ -38,7 +38,7 @@ class DespesasTest extends TestCase
 
         $body = json_decode($response->getBody()->getContents());
 
-        //Testa se o id despesa é inteiro
+        //Testa se o id usuário é inteiro
         $this->assertIsInt($body->data->id);
 
     }
@@ -46,11 +46,10 @@ class DespesasTest extends TestCase
     //Testa as requisições do tipo GET
     public function testGET()
     {
-        //Testa o retorno de todas as despesas cadastradas do usuário
-        $response = $this->http->request('GET', 'http://localhost:8000/api/despesas', [
+        //Testa o retorno de todos os usuários cadastrados
+        $response = $this->http->request('GET', 'http://localhost:8000/api/users', [
             'headers'=> [
                 'Authorization' => 'Bearer {token}', //Token gerado através da rota /Oauth/Token
-                'email' => 'gabriellcarvalho12@hotmail.com' //Email do usuario criado através da API User
             ]
         ]);
 
@@ -59,11 +58,11 @@ class DespesasTest extends TestCase
 
         $body = json_decode($response->getBody()->getContents());
 
-        //Testa se o id despesa é inteiro
+        //Testa se o id usuário é inteiro
         $this->assertIsInt($body->data['0']->id);
 
-        //Testa o retorno de uma despesa específica
-        $response = $this->http->request('GET', 'http://localhost:8000/api/despesas/{id}', [
+        //Testa o retorno de um usuário específico
+        $response = $this->http->request('GET', 'http://localhost:8000/api/users/29', [
             'headers'=> [
                 'Authorization' => 'Bearer {token}', //Token gerado através da rota /Oauth/Token
             ]
@@ -74,20 +73,20 @@ class DespesasTest extends TestCase
 
         $body = json_decode($response->getBody()->getContents());
 
-        //Testa se o id despesa é inteiro
+        //Testa se o id usuário é inteiro
         $this->assertIsInt($body->data->id);
 
     }
 
     public function testPUT()
     {
-        //Testa a atualização de uma despesa
-        $response = $this->http->request('PUT', 'http://localhost:8000/api/despesas/{id}', [
+        //Testa a atualização de um usuário
+        $response = $this->http->request('PUT', 'http://localhost:8000/api/users/29', [
             'headers'=> ['Authorization' => 'Bearer {token}'], //Token gerado através da rota /Oauth/Token
             'form_params' => [
-                'descricao' => 'testUpdate',
-                'data' => '2024-01-01',
-                'valor' => '100'
+                'name' => 'nameTeste',
+                'email' => '2029-01-01',
+                'password' => 'senhaTeste'
             ],
         ]);
 
@@ -96,15 +95,15 @@ class DespesasTest extends TestCase
 
         $body = json_decode($response->getBody()->getContents());
 
-        //Testa se o id despesa é inteiro
+        //Testa se o id usuário é inteiro
         $this->assertIsInt($body->data->id);
 
     }
 
     public function testDELETE()
     {
-        //Testa a exclusão de uma despesa
-        $response = $this->http->request('DELETE', 'http://localhost:8000/api/despesas/{id}}', [
+        //Testa a exclusão de um usuário
+        $response = $this->http->request('DELETE', 'http://localhost:8000/api/users/29}', [
             'headers'=> ['Authorization' => 'Bearer {token}'], //Token gerado através da rota /Oauth/Token
         ]);
 

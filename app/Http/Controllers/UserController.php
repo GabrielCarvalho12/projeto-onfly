@@ -42,7 +42,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'Usuário Cadastrado',
-            'user' => $user
+            'data' => $user
         ], 200);
     }
 
@@ -59,7 +59,7 @@ class UserController extends Controller
 
         return response()->json([
             "data" => $user
-        ], 201);
+        ], 200);
     }
 
     /**
@@ -75,7 +75,6 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $data = $request->all();
         $user->password = Hash::make($request->password);
         $user->save();
 
@@ -84,7 +83,7 @@ class UserController extends Controller
         return response()->json([
             "message" => "User Atualizado",
             "data" => $dados
-        ], 201);
+        ], 200);
     }
 
     /**
@@ -101,6 +100,6 @@ class UserController extends Controller
 
         return response()->json([
             "message" => "User Excluído"
-        ], 201);
+        ], 200);
     }
 }

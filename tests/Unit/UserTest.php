@@ -62,7 +62,7 @@ class UserTest extends TestCase
         $this->assertIsInt($body->data['0']->id);
 
         //Testa o retorno de um usuário específico
-        $response = $this->http->request('GET', 'http://localhost:8000/api/users/29', [
+        $response = $this->http->request('GET', 'http://localhost:8000/api/users/{id}', [
             'headers'=> [
                 'Authorization' => 'Bearer {token}', //Token gerado através da rota /Oauth/Token
             ]
@@ -81,11 +81,11 @@ class UserTest extends TestCase
     public function testPUT()
     {
         //Testa a atualização de um usuário
-        $response = $this->http->request('PUT', 'http://localhost:8000/api/users/29', [
+        $response = $this->http->request('PUT', 'http://localhost:8000/api/users/{id}', [
             'headers'=> ['Authorization' => 'Bearer {token}'], //Token gerado através da rota /Oauth/Token
             'form_params' => [
                 'name' => 'nameTeste',
-                'email' => '2029-01-01',
+                'email' => '2024-01-01',
                 'password' => 'senhaTeste'
             ],
         ]);
@@ -103,7 +103,7 @@ class UserTest extends TestCase
     public function testDELETE()
     {
         //Testa a exclusão de um usuário
-        $response = $this->http->request('DELETE', 'http://localhost:8000/api/users/29}', [
+        $response = $this->http->request('DELETE', 'http://localhost:8000/api/users/{id}', [
             'headers'=> ['Authorization' => 'Bearer {token}'], //Token gerado através da rota /Oauth/Token
         ]);
 

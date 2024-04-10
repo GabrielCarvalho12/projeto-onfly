@@ -29,6 +29,7 @@ O comando abaixo irá gerar as Keys que serão utilizadas na autenticação da A
 <br />
 ```bash
 php artisan passport:install
+```
 <br />
 Com isso, basta executar o seguinte comando e a API deve funcionar perfeitamente:
 <br />

@@ -50,7 +50,6 @@ Após isso, execute o seguinte comando na raiz do projeto front-end para instala
 ```bash
 npm install
 ```
-<br />
 Após a instalação execute o comando abaixo para rodar o projeto:
 <br />
 ```bash

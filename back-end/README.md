@@ -10,6 +10,7 @@
 Descrição: API para Gestão de Despesas, teste prático processo seletivo da Onfly.
 
 Realize o clone do repositório.
+
 Logo após, a primeira configuração à ser realizada é a criação do arquivo .env, pois nele serão setadas as variáveis do Banco de Dados MySQL e envio de E-mail via SMTP, o arquivo .env.example demonstra como devem ser realizadas as configurações.
 
 Em seguida, certifique-se que você tenha o PHP 8.0+ e o Composer instalados.

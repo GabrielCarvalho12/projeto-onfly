@@ -21,16 +21,13 @@ Após isso, execute o seguinte comando na raiz do projeto back-end para instalar
 composer install
 ```
 Execute o comando abaixo para estruturar o Banco de Dados:
-<br />
 ```bash
 php artisan migrate
 ```
 O comando abaixo irá gerar as Keys que serão utilizadas na autenticação da API Despesas:
-<br />
 ```bash
 php artisan passport:install
 ```
-<br />
 Com isso, basta executar o seguinte comando e a API deve funcionar perfeitamente:
 <br />
 ```bash

@@ -21,11 +21,12 @@ class DespesasController extends Controller
      */
     public function index(Request $request)
     {
-        $user = User::where('email', $request->header('email'))->first();
+         $user = User::where('email', $request->header('email'))->first();
         $user = new UserResource($user);
 
+
         $despesa = Despesas::where('usuario', $user->id)->get();
-        $this->authorize('verDespesaId', $despesa->first());
+        $this->authorize('verDespesa', $despesa->first());
         $despesa = new DespesasResourceCollection($despesa);
 
         return response()->json([
@@ -91,7 +92,7 @@ class DespesasController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('verDespesaId', Despesas::find($id));
+        $this->authorize('verDespesa', Despesas::find($id));
 
         $despesa = Despesas::where('id', $id)->first();
         $dados = new DespesasResource($despesa);
@@ -112,7 +113,7 @@ class DespesasController extends Controller
     {
         $despesa = Despesas::find($id);
 
-        $this->authorize('verDespesaId', $despesa);
+        $this->authorize('verDespesa', $despesa);
 
         $despesa->descricao = $request->descricao;
         $despesa->data = $request->data;
@@ -137,7 +138,7 @@ class DespesasController extends Controller
     {
         $despesa = Despesas::find($id);
 
-        $this->authorize('verDespesaId', $despesa);
+        $this->authorize('verDespesa', $despesa);
 
         $despesa->delete();
 

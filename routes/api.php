@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-//Registrar usuário
-Route::resource('register', 'App\Http\Controllers\UserRegisterController')->only(['store']);
+//Rota que gera o token de autenticação da API
+Route::post('auth/token', 'App\Http\Controllers\DefaultController@authenticate');
 
 //CRUD de Despesas
 Route::apiResource('despesas', 'App\Http\Controllers\DespesasController')->middleware('auth:api');
 
 //CRUD de Usuários
-Route::apiResource('users', 'App\Http\Controllers\UserController')->middleware('auth:api');
+Route::apiResource('users', 'App\Http\Controllers\UserController');
 

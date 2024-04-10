@@ -7,7 +7,6 @@
     - MySQL
 
 ## Instruções para Utilização do Backend
-<br />
 Descrição: API para Gestão de Despesas, teste prático processo seletivo da Onfly.
 
 Realize o clone do repositório.
@@ -38,7 +37,6 @@ Segue o link para a documentação da API:
 https://documenter.getpostman.com/view/13643890/2sA3BgAFct
 
 ## Instruções para Utilização do Frontend
-<br />
 Descrição: Sistema para gestão dos usuários da API, teste prático do processo seletivo da Onfly.
 
 Certifique-se de ter a versão mais recente do Node.js instalada.

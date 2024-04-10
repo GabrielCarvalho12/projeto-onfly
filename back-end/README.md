@@ -8,7 +8,7 @@
 
 ## Instruções para Utilização do Backend
 Descrição: API para Gestão de Despesas, teste prático processo seletivo da Onfly.
-
+<br />
 Realize o clone do repositório.
 
 
@@ -40,7 +40,7 @@ https://documenter.getpostman.com/view/13643890/2sA3BgAFct
 
 ## Instruções para Utilização do Frontend
 Descrição: Sistema para gestão dos usuários da API, teste prático do processo seletivo da Onfly.
-
+<br />
 Certifique-se de ter a versão mais recente do Node.js instalada.
 
 Após isso, execute o seguinte comando na raiz do projeto front-end para instalar suas dependências

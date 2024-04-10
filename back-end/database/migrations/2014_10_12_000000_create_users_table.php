@@ -30,8 +30,7 @@ class CreateUsersTable extends Migration
             array(
                 'name' => 'admin',
                 'email' => 'admin@email.com',
-                'password' => Hash::make('admin'),
-                'password_confirmation' => Hash::make('admin'),
+                'password' => Hash::make('admin')
             )
         );
     }

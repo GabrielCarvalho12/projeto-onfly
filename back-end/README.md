@@ -35,8 +35,8 @@ Com isso, basta executar o seguinte comando e a API deve funcionar perfeitamente
 <br />
 ```bash
 php artisan serve
-
-Logo abaixo está um link com documentação da API:
+```
+Este é um link com documentação da API:
 https://documenter.getpostman.com/view/13643890/2sA3BgAFct
 
 ## Instruções para Utilização do Frontend

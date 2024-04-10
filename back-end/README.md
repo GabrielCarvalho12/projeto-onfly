@@ -25,7 +25,6 @@ Execute o comando abaixo para estruturar o Banco de Dados:
 ```bash
 php artisan migrate
 ```
-
 O comando abaixo irá gerar as Keys que serão utilizadas na autenticação da API Despesas:
 <br />
 ```bash

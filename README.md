@@ -1,86 +1,76 @@
 # Fullstack Challenge - Onfly 20231205
 
-## Introdução
+## Tecnologias e Frameworks
+    - Laravel
+    - Vue.js
+    - Quasar
+    - MySQL
 
-Este é o nosso case técnico! A ideia é que você possa mostrar toda sua expertise técnica através dele!
-Estamos animados para te ver brilha!
-
-[SPOILER] As instruções de entrega e apresentação do challenge estão no final deste Readme (=
-
-### Antes de começar
-
-- Prepare o projeto para ser disponibilizado no Github, copiando o conteúdo deste repositório para o seu (ou utilize o fork do projeto e aponte para o Github). Confirme que a visibilidade do projeto é pública (não esqueça de colocar no readme a referência a este challenge);
-- O projeto deve utilizar a Linguagem específica na sua Vaga (caso esteja se candidatando). Por exempo: PHP, Node.js e entre outras;
-- Considere como *deadline 4 dias a partir do início do desafio*. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
-- Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
-
-### Instruções iniciais obrigatórias
-
-- O projeto deverá ser desenvolvido com uma das tecnologias a seguir: **PHP Laravel | Vue.js**;
-- Criar um banco de dados **MySQL**. (Recomendável usar Drivers oficiais para integração com o DB)
-
-### Back-End:
-
-Nessa etapa você deverá construir uma API Restful com Laravel, implementando:
-- Autenticação de usuário.
-- CRUD de despesas.
-- Restrição de acesso.
-- A api deverá conter uma forma de Autenticação. (o CRUD deve estar protegido pela
-autenticação).
-
-Na entidade despesas, deverá conter:
-- Id
-- Descrição (descrição da despesa)
-- Data (data de quando ocorreu a despesa)
-- Usuário (usuário dono da despesa, um relacionamento com a tabela de Usuários)
-- Valor (valor em reais da despesa)
-
-### Front-end:
-
-Faça em Vue.js uma tela de gestão de usuários (CRUD) utilizando sua API. Para facilitar o desenvolvimento, deve-se usar UI framework baseado em Vue.js: Quasar.
+## Instruções para Utilização do Backend
+Descrição: API para Gestão de Despesas, teste prático processo seletivo da Onfly.
 
 
-### Observações para o teste:
-- Colocar validação nos requests do CRUD (usuário existe, data não é futuro, valor não é negativo, descrição tem até 191 caracteres).
-- Colocar restrição de acessos nos requests do CRUD (somente o usuário relacionado a despesa pode acessar e agir sobre ela).
-- Ao cadastrar uma despesa, deverá ser enviado um e-mail para o usuário vinculado a despesa, com o título "despesa cadastrada".
-- O teste pode ser realizado da forma que preferir, porém, a forma como for realizado o projeto será o ponto central da avaliação. Recomendamos implementar o projeto do jeito mais simples possível e seguir as boas práticas do Clean Code.
-- Usar os recursos nativos do Laravel é o que entendemos como um bom teste simples e que usa bem o Framework.
+Realize o clone do repositório.
 
-### Recomendamos utilizar as boas práticas do Laravel para a criação desse projeto:
-- Fazer a validação da API utilizando o Form Request.
-- Documentação faz TODA a diferença!
-- Fazer a camada de transformação da API utilizando o API Resources.
-- Fazer a camada de roteamento utilizando API Resource Routes.
-- Não esqueça dos testes unitários!
-- Fazer a camada de restrição de acesso utilizando as Policies.
-- Disparar o e-mail utilizando as Notifications, e colocar ele em uma fila, para que seja
-disparado de forma assíncrona.
-- Não se esqueça das FK nas Migrations e das Relations dos Models.
+Logo após, a primeira configuração à ser realizada é a criação do arquivo .env, pois nele serão setadas as variáveis do Banco de Dados MySQL e envio de E-mail via SMTP, o arquivo .env.example demonstra como devem ser realizadas as configurações.
 
+Em seguida, certifique-se que você tenha o PHP 8.0+ e o Composer instalados.
 
+Após isso, execute o seguinte comando na raiz do projeto back-end para instalar suas dependências
+<br />
+```bash
+composer install
+```
+Execute o comando abaixo para estruturar o Banco de Dados:
+```bash
+php artisan migrate
+```
+O comando abaixo irá gerar as Keys que serão utilizadas na autenticação da API Despesas:
+```bash
+php artisan passport:install
+```
+Com isso, basta executar o seguinte comando e a API deve funcionar perfeitamente:
+<br />
+```bash
+php artisan serve
+```
+<br />
+Segue o link para a documentação da API:
+https://documenter.getpostman.com/view/13643890/2sA3BgAFct
 
-## Readme do Repositório
+## Instruções para Utilização do Frontend
+Descrição: Sistema para gestão dos usuários da API, teste prático do processo seletivo da Onfly.
+<br />
+Certifique-se de ter a versão mais recente do Node.js instalada.
 
-- Deve conter o título do projeto
-- Uma descrição sobre o projeto em frase
-- Deve conter uma lista com linguagem, framework e/ou tecnologias usadas
-- Como instalar e usar o projeto (instruções)
-- Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
-- Se está usando github pessoal, referencie que é um challenge by coodesh:
+Após isso, execute o seguinte comando na raiz do projeto front-end para instalar suas dependências
+<br />
+```bash
+npm install
+```
+Após a instalação execute o comando abaixo para rodar o projeto:
+<br />
+```bash
+quasar dev
+```
+## Diário de Bordo
+
+- Após inicializar o projeto, comecei pela estruturação do Banco de Dados MySQL através das migrations do laravel.
+
+- Criação das Rotas, Controllers e Models da API.
+
+- Fiz a validação da API com o Form Request para implementar as regras de preenchimento dos campos da API.
+
+- Utilizei o API Resources para estruturar o retorno das rotas.
+
+- Com a utilização do API Resource Routes realizei a configuração das rotas de forma rápida e eficiente.
+
+- Foram criados os primeiros testes unitários como intuito de mapear possíveis erros que os endpoists da API poderiam apresentar.
+
+- Através das policies criei as restrições no CRUD Despesas, assim cada usuário só terá acesso as suas despesas.
+
+- Utilizando as Notifications desenvolvi o envio da confirmação por e-mail ao usuário sempre que uma nova despesa for cadastrada.
+
+- Com a API concluida iniciei a criação da tela de gestão de usuários que utiliza a API, onde primeiramente desenvolvi a configuração das rotas através do axios, fazendo a listagem dos usuários e já criando a deleção deles e em seguida criei os forms para inserção e edição das informações dos usuário.
 
 >  This is a challenge by [Coodesh](https://coodesh.com/)
-
-## Finalização e Instruções para a Apresentação
-
-1. Adicione o repositório na avaliação
-2. Verifique se o Readme está bom e faça o commit final;
-3. Ao finalizar a entrega do código, enviar para a avaliação no botão "Enviar Código" na parte superior da avaliação
-4. Apresentar o resultado da sua entrega, você terá as instruções para apresentação após "Enviar Código".
-
-## Suporte
-
-Use o nosso canal no slack: http://bit.ly/32CuOMy para tirar dúvidas sobre o processo ou envie um e-mail para contato@coodesh.com.
-
-
-

@@ -20,7 +20,6 @@ Após isso, execute o seguinte comando na raiz do projeto back-end para instalar
 ```bash
 composer install
 ```
-<br />
 Execute o comando abaixo para estruturar o Banco de Dados:
 <br />
 ```bash

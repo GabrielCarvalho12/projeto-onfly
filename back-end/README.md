@@ -36,6 +36,7 @@ Com isso, basta executar o seguinte comando e a API deve funcionar perfeitamente
 ```bash
 php artisan serve
 ```
+<br />
 Este é um link com documentação da API:
 https://documenter.getpostman.com/view/13643890/2sA3BgAFct
 
